@@ -5,7 +5,7 @@ def xtill():
 		till()
 
 def water():
-	if get_water() < 0.5:
+	if get_water() < 0.75:
 		use_item(Items.Water)
 
 def auto_plant(plant_type):
@@ -29,6 +29,7 @@ def ppumpkin(size=6):
  
 	def loop():
 		xtill()
+		water()
 		plant(Entities.Pumpkin)
   
 	navigate_farm(loop, size)
@@ -43,7 +44,11 @@ def ppumpkin(size=6):
 			plant(Entities.Pumpkin)
 
 	navigate_farm(checkPumpkin, size)
- 
+ 	
+	if len(dead_pumpkins) == 0:
+		goto(start_x, start_y)
+		harvest()
+ 		
 	while len(dead_pumpkins) > 0:
 		for pumpkin in dead_pumpkins:
 			goto(pumpkin["x"], pumpkin["y"])
