@@ -1,16 +1,24 @@
 from helpers import *
 from planting import *
 
-def hey_tree_carrot():
-	water()
-	if can_harvest():
-		harvest()
-	if(get_pos_x()>=6):
-		pcarrot()
-	else:
-		ptree()
 
-goto(0,0)
 while True:
-	navigate_farm(hey_tree_carrot)
+	
+	goto(0,0)
+	navigate_farm(pcarrot, 6, 6)
+
+	goto(6,0)
+	navigate_farm(ptree, 6, 6)
+
+	goto(0,12)
+	psunflower(6,4)
+
+	goto(3,14)
+	pweird()
+
+	goto(0,6)
+	ppumpkin(6)
+
+	goto(6,6)
+	pcactus(6,6)
 			

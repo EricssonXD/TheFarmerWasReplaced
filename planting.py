@@ -1,8 +1,12 @@
 from helpers import *
 
-def xtill():
-	if get_ground_type() == Grounds.Grassland:
+def tillx(tilled = True):
+	if (get_ground_type() == Grounds.Grassland and tilled) or (get_ground_type() == Grounds.Soil and not tilled):
 		till()
+
+def harvestx():
+	if can_harvest():
+		harvest()
 
 def water():
 	if get_water() < 0.75:
@@ -13,14 +17,14 @@ def auto_plant(plant_type):
 		pcarrot()
 
 def pcarrot():
-	xtill()
+	tillx()
 	if can_harvest():
 		harvest()
 	water()
 	plant(Entities.Carrot)
 	
 def ptree():
-	xtill()
+	tillx()
 	if can_harvest():
 		harvest()
 	if((get_pos_x()+get_pos_y())%2==0):
@@ -36,7 +40,7 @@ def ppumpkin(size=6):
 	start_y = get_pos_y()
  
 	def looppmpkin():
-		xtill()
+		tillx()
 		water()
 		plant(Entities.Pumpkin)
   
@@ -70,7 +74,7 @@ def ppumpkin(size=6):
 def psunflower(size_x = 3, size_y = 4, target = 1000):
 	plist = []
 	def loopsunflower():
-		xtill()
+		tillx()
 		plant(Entities.Sunflower)
 		p = measure()
 		plist.append({"x": get_pos_x(), "y": get_pos_y(), "p": p})
@@ -97,7 +101,7 @@ def pcactus(size_x = 6, size_y = 6):
 	init_y = get_pos_y()
 
 	def loopcactus():
-		xtill()
+		tillx()
 		water()
 		plant(Entities.Cactus)
 	navigate_farm(loopcactus, size_x, size_y)
@@ -139,16 +143,16 @@ def pweird():
 	if can_harvest():
 		use_item(Items.Weird_Substance)
 		harvest()
-	xtill()
-	plant(Entities.Carrot)
+	tillx(False)
+	# plant(Entities.Carrot)
 	water()
 	rev_direction = {North: South, South: North, East: West, West: East}
 	for i in [North, East, South, West]:
 		move(i)
 		if can_harvest():
 			harvest()
-		xtill()
-		plant(Entities.Tree)
+		tillx(False)
+		# plant(Entities.Tree)
 		water()
 		move(rev_direction[i])
 

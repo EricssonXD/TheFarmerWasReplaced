@@ -3,7 +3,7 @@ from planting import *
 
 
 def regulate_supply():
-    
+	
 	target_supply = 10000
 	if num_items(Items.Carrot) < target_supply:
 		goto(0,0)
@@ -15,7 +15,7 @@ def regulate_supply():
 		navigate_farm(ptree, 6, 6)
 		return True
   
-	if num_items(Items.Power) < target_supply:
+	if num_items(Items.Power) < 300:
 		goto(0,12)
 		psunflower(6,4)
 		return True
@@ -35,9 +35,9 @@ def regulate_supply():
 		pcactus(6,6)
 		return True
 
-
+clear()
 while True:
 	while regulate_supply():
 		continue
-	goto(0,6)
-	ppumpkin()
+	goto(3,3)
+	pweird()
