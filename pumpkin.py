@@ -1,21 +1,21 @@
 from helpers import *
+from planting import *
 
 
-goto(0, 0)
+def regulate_supply():
+	if num_items(Items.Carrot) < 1000:
+		goto(0,0)
+		navigate_farm(pcarrot, 6, 6)
+  
+	if num_items(Items.Wood) < 1000 or num_items(Items.Hay) < 1000:
+		goto(6,0)
+		navigate_farm(ptree, 6, 6)
+  
+	if num_items(Items.Power) < 200:
+		goto(0,12)
+		psunflower()
+
 while True:
-	pcount = 0
-	for i in range(get_world_size()):
-		for j in range(get_world_size()):
-			water()
-			if get_ground_type() == Grounds.Grassland:
-				till()
-			if get_entity_type() == Entities.Pumpkin and can_harvest():
-				pcount = pcount + 1
-			else:
-				harvest()
-
-			plant(Entities.Pumpkin)
-			move(North)
-		move(East)
-	if pcount == get_world_size() ** 2:
-		harvest()
+	regulate_supply()
+	goto(0,6)
+	ppumpkin()

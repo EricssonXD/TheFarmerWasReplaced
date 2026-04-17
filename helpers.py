@@ -1,13 +1,14 @@
-def navigate_farm(loop_function, size = get_world_size()):
-	for i in range(size):
-		for j in range(size-1):
+def navigate_farm(loop_function, sizex = get_world_size(), sizey = get_world_size()):
+	for i in range(sizex):
+		for j in range(sizey-1):
 			loop_function()
 			if i%2==0:
 				move(North)
 			else:
 				move(South)
 		loop_function()
-		move(East)
+		if i != sizex-1:
+			move(East)
 		
 
 def goto(x,y):
