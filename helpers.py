@@ -1,6 +1,6 @@
-def navigate_farm(loop_function):
-	for i in range(get_world_size()):
-		for j in range(get_world_size()-1):
+def navigate_farm(loop_function, size = get_world_size()):
+	for i in range(size):
+		for j in range(size-1):
 			loop_function()
 			if i%2==0:
 				move(North)
@@ -22,7 +22,5 @@ def goto(x,y):
 		else:
 			move(North)
 		
-def water():
-	if get_water() < 0.5:
-		use_item(Items.Water)
+
   
