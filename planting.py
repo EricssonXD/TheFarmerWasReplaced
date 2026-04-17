@@ -87,3 +87,66 @@ def psunflower():
 		water()
 		plist.remove(best_flower)
 		plist.append({"x": get_pos_x(), "y": get_pos_y(), "p": measure()})
+
+def pcactus(size_x = 6, size_y = 6):
+	
+	init_x = get_pos_x()
+	init_y = get_pos_y()
+
+	def loopcactus():
+		xtill()
+		water()
+		plant(Entities.Cactus)
+	navigate_farm(loopcactus, size_x, size_y)
+
+	# Sort row
+	for i in range(size_y):
+		sorted = False
+		while not sorted:
+			sorted = True
+			goto(init_x, init_y + i)
+			for j in range(size_x-1):
+				c_size = measure()
+				c_next = measure(East)
+				if c_next < c_size: # type: ignore
+					swap(East)
+					sorted = False
+				move(East)
+		goto(init_x, init_y + i)
+
+	# Sort Column
+	for i in range(size_x):
+		sorted = False
+		while not sorted:
+			sorted = True
+			goto(init_x + i, init_y)
+			for j in range(size_y-1):
+				c_size = measure()
+				c_next = measure(North)
+				if c_next < c_size: # type: ignore
+					swap(North)
+					sorted = False
+				move(North)
+		goto(init_x + i, init_y)
+
+	goto(init_x, init_y)
+	harvest()
+
+def pweird():
+	if can_harvest():
+		use_item(Items.Weird_Substance)
+		harvest()
+	xtill()
+	plant(Entities.Carrot)
+	water()
+	rev_direction = {North: South, South: North, East: West, West: East}
+	for i in [North, East, South, West]:
+		move(i)
+		if can_harvest():
+			harvest()
+		xtill()
+		plant(Entities.Tree)
+		water()
+		move(rev_direction[i])
+
+	
