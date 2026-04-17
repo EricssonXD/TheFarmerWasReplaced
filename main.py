@@ -3,32 +3,41 @@ from planting import *
 
 
 def regulate_supply():
-	if num_items(Items.Carrot) < 1000:
+    
+	target_supply = 10000
+	if num_items(Items.Carrot) < target_supply:
 		goto(0,0)
 		navigate_farm(pcarrot, 6, 6)
+		return True
   
-	if num_items(Items.Wood) < 1000 or num_items(Items.Hay) < 1000:
+	if num_items(Items.Wood) < target_supply or num_items(Items.Hay) < target_supply:
 		goto(6,0)
 		navigate_farm(ptree, 6, 6)
+		return True
   
-	if num_items(Items.Power) < 300:
+	if num_items(Items.Power) < target_supply:
 		goto(0,12)
-		psunflower()
+		psunflower(6,4)
+		return True
 
-	if num_items(Items.Weird_Substance) < 1000:
+	if num_items(Items.Weird_Substance) < target_supply:
 		goto(3,14)
 		pweird()
+		return True
 
-	if num_items(Items.Pumpkin) < 1000:
+	if num_items(Items.Pumpkin) < target_supply:
 		goto(0,6)
-		pcactus(6,6)
+		ppumpkin(6)
+		return True
 
-	if num_items(Items.Cactus) < 1000:
+	if num_items(Items.Cactus) < target_supply:
 		goto(6,6)
 		pcactus(6,6)
+		return True
 
 
 while True:
-	regulate_supply()
-	goto(10,1)
-	pweird()
+	while regulate_supply():
+		continue
+	goto(0,6)
+	ppumpkin()

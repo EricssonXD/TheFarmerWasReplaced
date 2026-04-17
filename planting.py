@@ -14,10 +14,15 @@ def auto_plant(plant_type):
 
 def pcarrot():
 	xtill()
+	if can_harvest():
+		harvest()
 	water()
 	plant(Entities.Carrot)
 	
 def ptree():
+	xtill()
+	if can_harvest():
+		harvest()
 	if((get_pos_x()+get_pos_y())%2==0):
 		plant(Entities.Tree)
 		water()
@@ -62,19 +67,17 @@ def ppumpkin(size=6):
 				
 	harvest()
 	
-def psunflower():
-	# init_x = get_pos_x()
-	# init_y = get_pos_y()
+def psunflower(size_x = 3, size_y = 4, target = 1000):
 	plist = []
 	def loopsunflower():
 		xtill()
 		plant(Entities.Sunflower)
 		p = measure()
 		plist.append({"x": get_pos_x(), "y": get_pos_y(), "p": p})
+	
+	navigate_farm(loopsunflower, size_x, size_y)
 
-	navigate_farm(loopsunflower, 3, 4)
-
-	while num_items(Items.Power) < 1000:
+	while num_items(Items.Power) < target:
 		maxp = 0
 		for flower in plist:
 			if flower["p"] > maxp:

@@ -1,6 +1,6 @@
 from planting import *
 from helpers import *
+from maze import pmaze
 
 while True:
-	goto(0,0)
-	ppumpkin()
+	pmaze(16)
