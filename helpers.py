@@ -23,5 +23,8 @@ def goto(x,y):
 		else:
 			move(North)
 		
-
-  
+def timer(func):
+    start_time = get_tick_count()
+    func()
+    end_time = get_tick_count()
+    print(end_time - start_time)

@@ -3,18 +3,18 @@ from planting import *
 
 
 def regulate_supply():
-	
+    
 	target_supply = 10000
 	if num_items(Items.Carrot) < target_supply:
 		goto(0,0)
 		navigate_farm(pcarrot, 6, 6)
 		return True
-  
+
 	if num_items(Items.Wood) < target_supply or num_items(Items.Hay) < target_supply:
 		goto(6,0)
 		navigate_farm(ptree, 6, 6)
 		return True
-  
+
 	if num_items(Items.Power) < 300:
 		goto(0,12)
 		psunflower(6,4)
