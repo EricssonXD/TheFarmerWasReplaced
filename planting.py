@@ -165,4 +165,35 @@ def pweird():
 		water()
 		move(rev_direction[i])
 
-	
+def polyculture():
+	plant(Entities.Grass)
+	last_planted_x = 0
+	last_planted_y = 0
+	companion = get_companion()
+	if companion is not None:
+		ctype, ccoord = companion
+		last_planted_x = ccoord[0]
+		last_planted_y = ccoord[1]
+		goto(last_planted_x, last_planted_y)
+		tillx()
+		plant(ctype)
+		water()
+
+	while True:
+		# Get the current plant's companion
+		companion = get_companion()
+		if companion is not None:
+			# Go to the previous plant and harvest it (The current plant should be it's companion)
+			goto(last_planted_x, last_planted_y)
+			while not can_harvest():
+				pass
+			harvest()
+			# Goto and plant the current plant's companion
+			ctype, ccoord = companion
+			last_planted_x = ccoord[0]
+			last_planted_y = ccoord[1]
+			goto(last_planted_x, last_planted_y)
+			plant(ctype)
+			water()
+		else:
+			return

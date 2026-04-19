@@ -28,3 +28,5 @@ def timer(func):
     func()
     end_time = get_tick_count()
     print(end_time - start_time)
+
+CONST_DIRECTIONS = [North, East, South, West]
