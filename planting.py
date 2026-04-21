@@ -9,8 +9,9 @@ def harvestx():
 		harvest()
 
 def water():
-	if get_water() < 0.75:
+	while get_water() < 0.75:
 		use_item(Items.Water)
+
 
 def auto_plant(plant_type):
 	if plant_type == Entities.Carrot:
@@ -165,16 +166,21 @@ def pweird():
 		water()
 		move(rev_direction[i])
 
+def wait_for_harvest():
+	while not can_harvest():
+		continue
+	harvest()
+
 def polyculture():
 	plant(Entities.Grass)
-	last_planted_x = 0
-	last_planted_y = 0
+	last_planted_x = get_pos_x()
+	last_planted_y = get_pos_y()
 	companion = get_companion()
-	if companion is not None:
-		ctype, ccoord = companion
-		last_planted_x = ccoord[0]
-		last_planted_y = ccoord[1]
-		goto(last_planted_x, last_planted_y)
+	ccord_x = 0
+	ccord_y = 0
+	if companion != None:
+		ctype, (ccord_x, ccord_y) = companion
+		goto(ccord_x,  ccord_y)
 		tillx()
 		plant(ctype)
 		water()
@@ -182,18 +188,21 @@ def polyculture():
 	while True:
 		# Get the current plant's companion
 		companion = get_companion()
-		if companion is not None:
+		if companion != None:
 			# Go to the previous plant and harvest it (The current plant should be it's companion)
 			goto(last_planted_x, last_planted_y)
+			last_planted_x = ccord_x
+			last_planted_y = ccord_y
+			# spawn_drone(wait_for_harvest)
 			while not can_harvest():
-				pass
+				use_item(Items.Fertilizer)
+				continue
 			harvest()
 			# Goto and plant the current plant's companion
-			ctype, ccoord = companion
-			last_planted_x = ccoord[0]
-			last_planted_y = ccoord[1]
-			goto(last_planted_x, last_planted_y)
+			ctype, (ccord_x, ccord_y) = companion
+			goto(ccord_x, ccord_y)
+			tillx()
 			plant(ctype)
-			water()
+			spawn_drone(water)
 		else:
 			return

@@ -3,7 +3,7 @@ from planting import *
 
 
 def regulate_supply():
-    
+	
 	target_supply = 10000
 	if num_items(Items.Carrot) < target_supply:
 		goto(0,0)
